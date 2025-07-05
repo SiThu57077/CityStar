@@ -186,3 +186,7 @@
     border-radius: 50%;
 }
   
+.notification-list .timet {
+    font-size: 12px;
+    color: rgb(169, 168, 168);
+}

@@ -118,3 +118,16 @@ function closeToast(button) {
   toast.style.animation = "slideOut 0.4s ease forwards";
   setTimeout(() => toast.remove(), 400);
 }
+
+const bell = document.getElementById("bellToggle");
+const dropdown = document.getElementById("notificationDropdown");
+
+bell.addEventListener("click", () => {
+  dropdown.classList.toggle("hidden");
+});
+
+document.addEventListener("click", (e) => {
+  if (!bell.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.add("hidden");
+  }
+});

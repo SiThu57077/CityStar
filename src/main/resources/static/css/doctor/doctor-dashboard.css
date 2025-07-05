@@ -332,3 +332,8 @@ canvas {
     text-align: left;
     color: var(--linear-color-3);
 }
+
+.notification-list .timet {
+    font-size: 12px;
+    color: rgb(169, 168, 168);
+}

@@ -81,3 +81,16 @@ function startSessionCountdown() {
 });
 
 window.onload = startSessionCountdown;
+
+const bell = document.getElementById("bellToggle");
+const dropdown = document.getElementById("notificationDropdown");
+
+bell.addEventListener("click", () => {
+  dropdown.classList.toggle("hidden");
+});
+
+document.addEventListener("click", (e) => {
+  if (!bell.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.add("hidden");
+  }
+});
