@@ -97,7 +97,7 @@
                         </div>
                         <div class="calendar-content">
                           <div class="calendar-label">Today</div>
-                          <input id="calendar" class="calendar-date" type="date" />
+                          <input id="calendar" class="calendar-date" type="text" />
                         </div>
                     </div>
                 </div>
@@ -273,8 +273,7 @@
   <script>
     
     flatpickr("#calendar", {
-      dateFormat: "d M Y",
-      defaultDate: new Date()
+        dateFormat: "Y-m-d" 
     });
   </script>
 </html>

@@ -39,7 +39,8 @@ public class DoctorController {
 
     private final UserService userService;
     private final DoctorService doctorService;
-    public DoctorController(UserService userService,DoctorService doctorService) {
+    public DoctorController(UserService userService,
+                            DoctorService doctorService) {
         this.doctorService = doctorService;
         this.userService = userService;
     }

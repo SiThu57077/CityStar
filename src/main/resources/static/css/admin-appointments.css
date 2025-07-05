@@ -93,7 +93,7 @@
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    border: 1px solid red;
+    border: 1px solid #626262;
 }
 .patient-info{
     display: flex;

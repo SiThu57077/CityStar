@@ -15,6 +15,7 @@ public class NotificationService {
     public NotificationService(InotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
     }
+    
     public void createNotification(User user, String message) {
         Notification notification = Notification.builder()
                 .user(user)

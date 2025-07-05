@@ -33,6 +33,7 @@ import jakarta.transaction.Transactional;
 public class DoctorService {
 
     private final IavailabilityRepository availabilityrepo;
+    private final NotificationService notificationService;
     private final IdoctorRepository doctorRepository;
     private final StorageService storageService;
     private final IuserRepository userRepository;
@@ -41,12 +42,14 @@ public class DoctorService {
                          IdoctorRepository doctorRepository,
                          StorageService storageService,
                          IuserRepository userRepository,
-                         IappointmentRepository appointmentRepository) {
+                         IappointmentRepository appointmentRepository,
+                         NotificationService notificationService) {
         this.userRepository = userRepository;
         this.availabilityrepo = availabilityrepo;
         this.doctorRepository = doctorRepository;
         this.storageService = storageService;
         this.appointmentRepository = appointmentRepository;
+        this.notificationService = notificationService;
     }
 
     public Availability findByAvailabilityId(Long id) {
@@ -104,15 +107,6 @@ public class DoctorService {
                 .stream().map(AppointmentRowMapper::toDto).collect(Collectors.toList());
     }
 
-    public List<AppointmentDTO> getAppointmentsByStatus(Status status) {
-        return appointmentRepository.findByStatus(status)
-                .stream().map(AppointmentRowMapper::toDto).collect(Collectors.toList());
-    }
-
-    public List<AppointmentDTO> getAllAppointments() {
-        return appointmentRepository.findAll()
-                .stream().map(AppointmentRowMapper::toDto).collect(Collectors.toList());
-    }
 
     public List<AppointmentDTO> getAllAppointmentsByDoctor(Doctor doctor) {
         return appointmentRepository.findByAvailability_Doctor(doctor)
@@ -124,6 +118,10 @@ public class DoctorService {
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found"));
         appointment.setStatus(status);
+        notificationService.createNotification(
+            appointment.getPatient(),
+            "Your appointment status has been updated to: " + status
+        );
     }
 
     public Map<String, Long> getAppointmentCountsByStatusForDoctor(Doctor doctor) {
