@@ -34,4 +34,7 @@ public interface IappointmentRepository extends JpaRepository<Appointment, Long>
 
     List<Appointment> findByAppointmentTimeBetween(LocalDateTime start, LocalDateTime end);
 
+    List<Appointment> findTop5ByOrderByAppointmentTimeAsc();
+
+
 }

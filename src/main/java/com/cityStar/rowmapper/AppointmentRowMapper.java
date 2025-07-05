@@ -25,7 +25,7 @@ public class AppointmentRowMapper {
                 .appointmentTime(appointment.getAppointmentTime())
                 .status(appointment.getStatus())
                 .availability(AvailabilityRowMapper.toDtoWithDoctor(appointment.getAvailability()))
-                .patient(PatientRowMapper.toDtoWithoutPassword(appointment.getPatient())) // You can add a PatientDTO if needed
+                .patient(PatientRowMapper.toDtoWithoutPassword(appointment.getPatient())) 
                 .build();
     }
 }

@@ -2,6 +2,7 @@ package com.cityStar.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 // import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cityStar.dto.AdminDTO;
 import com.cityStar.dto.AppointmentDTO;
+import com.cityStar.dto.DoctorDTO;
 import com.cityStar.dto.UserDTO;
 import com.cityStar.enums.Status;
 import com.cityStar.model.Admin;
@@ -81,6 +83,30 @@ public class AdminController {
             return adminService.getAppointmentsByStatusForDate(status, date);
         }
         return adminService.getAppointmentsByDate(date);
+    }
+
+    @GetMapping("/appointments-stat")
+    @ResponseBody
+    public List<AppointmentDTO> getAllAppointments() {
+        return adminService.getAllAppointments();
+    }
+
+    @GetMapping("/appointments/top5")
+    @ResponseBody
+    public List<AppointmentDTO> getTop5Appointments() {
+        return adminService.getTop5UpcomingAppointments();
+    }
+
+    @GetMapping("/doctors/top5")
+    @ResponseBody
+    public List<DoctorDTO> getTop5Doctors() {
+        return adminService.getTop5Doctors();
+    }
+
+    @GetMapping("/appointment-stats/monthly")
+    @ResponseBody
+    public Map<String, List<Long>> getMonthlyAppointmentStats() {
+        return adminService.getMonthlyAppointmentCounts();
     }
 
     private AdminDTO getAdmin(CustomUserDetails user){
