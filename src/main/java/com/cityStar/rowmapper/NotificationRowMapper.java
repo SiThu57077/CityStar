@@ -13,4 +13,13 @@ public class NotificationRowMapper {
                 .user(user)
                 .build();
     }
+
+    public static NotificationDTO toDto(Notification notification) {
+        return NotificationDTO.builder()
+                .notificationId(notification.getNotificationId())
+                .message(notification.getMessage())
+                .isRead(notification.isRead())
+                .createdAt(notification.getCreatedAt())
+                .build();
+    }
 }

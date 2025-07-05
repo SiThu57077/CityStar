@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cityStar.dto.AdminDTO;
 import com.cityStar.dto.AppointmentDTO;
 import com.cityStar.dto.DoctorDTO;
+import com.cityStar.dto.NotificationDTO;
 import com.cityStar.dto.UserDTO;
 import com.cityStar.enums.Status;
 import com.cityStar.model.Admin;
@@ -23,6 +24,7 @@ import com.cityStar.rowmapper.AdminRowMapper;
 import com.cityStar.security.CustomUserDetails;
 import com.cityStar.service.UserService;
 import com.cityStar.service.AdminService;
+import com.cityStar.service.NotificationService;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,10 +32,13 @@ public class AdminController {
 
     private final UserService userService;
     private final AdminService adminService;
+    private final NotificationService notificationService;
     public AdminController(UserService userService,
-                           AdminService adminService) {
+                           AdminService adminService,
+                           NotificationService notificationService) {
         this.userService = userService;
         this.adminService = adminService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/dashboard")
@@ -107,6 +112,12 @@ public class AdminController {
     @ResponseBody
     public Map<String, List<Long>> getMonthlyAppointmentStats() {
         return adminService.getMonthlyAppointmentCounts();
+    }
+
+    @GetMapping("/notifications")
+    @ResponseBody
+    public List<NotificationDTO> getAllNotificationsForAdmin() {
+        return notificationService.getAllNotifications(); // No filtering on isRead
     }
 
     private AdminDTO getAdmin(CustomUserDetails user){

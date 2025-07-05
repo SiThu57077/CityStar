@@ -86,6 +86,7 @@ const bell = document.getElementById("bellToggle");
 const dropdown = document.getElementById("notificationDropdown");
 
 bell.addEventListener("click", () => {
+  console.log("Bell icon clicked");
   dropdown.classList.toggle("hidden");
 });
 
@@ -93,4 +94,44 @@ document.addEventListener("click", (e) => {
   if (!bell.contains(e.target) && !dropdown.contains(e.target)) {
     dropdown.classList.add("hidden");
   }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const bell = document.querySelector(".bell-icon-container");
+  const list = document.getElementById("notificationList");
+
+  function timeAgo(dateString) {
+    const now = new Date();
+    const then = new Date(dateString);
+    const diff = (now - then) / 1000; // seconds
+    if (diff < 60) return "Just now";
+    if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    return then.toLocaleDateString("en-US", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  }
+
+  function loadNotifications() {
+    fetch("/admin/notifications")
+      .then((res) => res.json())
+      .then((notifications) => {
+        list.innerHTML = "";
+        notifications.forEach((n) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <div class="title">${n.message}</div>
+            <div class="time">${timeAgo(n.createdAt)}</div>
+          `;
+          list.appendChild(li);
+          console.log("Notification loaded:", n.message);
+        });
+      });
+  }
+
+  bell.addEventListener("click", () => {
+    loadNotifications();
+  });
 });

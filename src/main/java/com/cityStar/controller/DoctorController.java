@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cityStar.dto.AppointmentDTO;
 import com.cityStar.dto.AvailabilityDTO;
 import com.cityStar.dto.DoctorDTO;
+import com.cityStar.dto.NotificationDTO;
 import com.cityStar.enums.Status;
 import com.cityStar.model.Availability;
 import com.cityStar.model.Doctor;
@@ -25,6 +26,7 @@ import com.cityStar.rowmapper.AvailabilityRowMapper;
 import com.cityStar.rowmapper.DoctorRowMapper;
 import com.cityStar.security.CustomUserDetails;
 import com.cityStar.service.DoctorService;
+import com.cityStar.service.NotificationService;
 import com.cityStar.service.UserService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,10 +41,13 @@ public class DoctorController {
 
     private final UserService userService;
     private final DoctorService doctorService;
+    private final NotificationService notificationService;
     public DoctorController(UserService userService,
-                            DoctorService doctorService) {
+                            DoctorService doctorService,
+                            NotificationService notificationService) {
         this.doctorService = doctorService;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
     
     @GetMapping("/dashboard")
@@ -185,6 +190,12 @@ public class DoctorController {
     public List<AppointmentDTO> getTodayAppointments(@AuthenticationPrincipal CustomUserDetails user) {
         Doctor doctor = (Doctor) userService.findByEmail(user.getUsername());
         return doctorService.getTodayAppointmentDTOs(doctor);
+    }
+
+    @GetMapping("/notifications")
+    @ResponseBody
+    public List<NotificationDTO> getAllNotificationsForDoctor() {
+        return notificationService.getAllNotifications(); // No filtering on isRead
     }
     
     private DoctorDTO getDoctor(CustomUserDetails user){

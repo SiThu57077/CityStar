@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cityStar.dto.AppointmentDTO;
 import com.cityStar.dto.AvailabilityDTO;
+import com.cityStar.dto.NotificationDTO;
 import com.cityStar.dto.PatientDTO;
 import com.cityStar.model.Availability;
 import com.cityStar.model.Patient;
@@ -157,6 +158,25 @@ public class PatientController {
         PatientDTO patient = getPatient(user);
         model.addAttribute("current_user", patient);
         return "patient/about-us";
+    }
+
+    @GetMapping("/notifications")
+    @ResponseBody
+    public List<NotificationDTO> getAllNotificationsForPatient(@AuthenticationPrincipal CustomUserDetails user) {
+        return notificationService.getNotificationsByUser(userService.findByEmail(user.getUsername()));
+    }
+
+    @PatchMapping("/notifications/{id}")
+    @ResponseBody
+    public ResponseEntity<?> markNotificationAsRead(@PathVariable Long id) {
+        try {
+            notificationService.markAsRead(id);
+            return ResponseEntity.ok("Notification marked as read successfully.");
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to mark notification as read: " + e.getMessage());
+        }
     }
 
     private PatientDTO getPatient(CustomUserDetails user){

@@ -173,3 +173,43 @@ function loadTodayAppointments() {
       });
     });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const bell = document.querySelector(".bell-icon-container");
+  const list = document.getElementById("notificationList");
+
+  function timeAgo(dateString) {
+    const now = new Date();
+    const then = new Date(dateString);
+    const diff = (now - then) / 1000; // seconds
+    if (diff < 60) return "Just now";
+    if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    return then.toLocaleDateString("en-US", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  }
+
+  function loadNotifications() {
+    fetch("/doctor/notifications")
+      .then((res) => res.json())
+      .then((notifications) => {
+        list.innerHTML = "";
+        notifications.forEach((n) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <div class="title">${n.message}</div>
+            <div class="timet">${timeAgo(n.createdAt)}</div>
+          `;
+          list.appendChild(li);
+          console.log("Notification loaded:", n.message);
+        });
+      });
+  }
+
+  bell.addEventListener("click", () => {
+    loadNotifications();
+  });
+});

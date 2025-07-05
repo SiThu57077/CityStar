@@ -10,4 +10,5 @@ import com.cityStar.model.User;
 public interface InotificationRepository extends JpaRepository<Notification,Long> {
     List<Notification> findByUserId(Long userId);
     List<Notification> findByUserAndIsReadFalse(User user);
+    List<Notification> findByUser(User user);
 }

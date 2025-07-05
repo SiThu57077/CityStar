@@ -1,12 +1,15 @@
 package com.cityStar.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.cityStar.dto.NotificationDTO;
 import com.cityStar.model.Notification;
 import com.cityStar.model.User;
 import com.cityStar.repository.InotificationRepository;
+import com.cityStar.rowmapper.NotificationRowMapper;
 
 @Service
 public class NotificationService {
@@ -25,8 +28,25 @@ public class NotificationService {
         notificationRepository.save(notification);
     }
 
-    public List<Notification> getUnreadNotifications(User user) {
-        return notificationRepository.findByUserAndIsReadFalse(user);
+    public List<NotificationDTO> getNotificationsByUser(User user) {
+        return notificationRepository.findByUser(user)
+                .stream()
+                .map(NotificationRowMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<NotificationDTO> getUnreadNotifications(User user) {
+        return notificationRepository.findByUserAndIsReadFalse(user)
+                .stream()
+                .map(NotificationRowMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<NotificationDTO> getAllNotifications() {
+            return notificationRepository.findAll()
+            .stream()
+            .map(NotificationRowMapper::toDto)
+            .collect(Collectors.toList());
     }
 
     public void markAsRead(Long notificationId) {
