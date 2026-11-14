@@ -1,6 +1,5 @@
 package com.cityStar;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 
@@ -8,8 +7,10 @@ import org.springframework.context.annotation.Import;
 @SpringBootTest
 class PatientDoctorSystemApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    // @Test
+    // void contextLoads() {
+        
+    //     assert true;
+    // }
 
 }

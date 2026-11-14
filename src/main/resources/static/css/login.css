@@ -7,13 +7,13 @@ body {
     /* font-weight: 100; */
 }
 :root {
-    --primary-color: #2337a8;
+    --primary-color: rgb(220, 20, 60);              /* soft red (Crimson) */     /* soft gray (standard gray) */   
     --secondary-color: #f50057;
     --text-color: #333;
     --background-color: #f4f4f4;
-    --linear-color-1:rgb(16, 4, 83);
-    --linear-color-2:rgb(42, 68, 174);
-    --linear-color-3: rgb(57, 154, 183);
+    --linear-color-1: rgb(178, 34, 34);             /* FireBrick (dark red base) */
+    --linear-color-2: rgb(255, 99, 71);             /* Tomato (medium red) */
+    --linear-color-3: rgb(255, 160, 122);           /* LightSalmon (light red) */
     --text-color:white;
     --error-color:red;
 }

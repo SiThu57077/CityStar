@@ -21,14 +21,20 @@ import com.cityStar.repository.IdoctorRepository;
 import com.cityStar.rowmapper.AppointmentRowMapper;
 import com.cityStar.rowmapper.DoctorRowMapper;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+
 @Service
 public class AdminService {
     private final IappointmentRepository appointmentRepository;
     private final IdoctorRepository doctorRepository;
+    private final NotificationService notificationService;
     public AdminService(IappointmentRepository appointmentRepository,
-                        IdoctorRepository doctorRepository) {
+                        IdoctorRepository doctorRepository,
+                        NotificationService notificationService) {
         this.appointmentRepository = appointmentRepository;
         this.doctorRepository = doctorRepository;
+        this.notificationService = notificationService;
     }
 
     public List<AppointmentDTO> getAppointmentsByStatus(Status status) {
@@ -119,6 +125,17 @@ public class AdminService {
         Map<String, List<Long>> result = new HashMap<>();
         statusMap.forEach((k, v) -> result.put(k.name(), v));
         return result;
+    }
+
+    @Transactional
+    public void updateStatus(Long appointmentId, Status status) {
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new EntityNotFoundException("Appointment not found"));
+        appointment.setStatus(status);
+        notificationService.createNotification(
+            appointment.getPatient(),
+            "Your appointment status has been updated to: " + status
+        );
     }
 
 }

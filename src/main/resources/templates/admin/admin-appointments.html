@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" th:href="@{/css/admin-appointments.css}">
     <link rel="stylesheet" th:href="@{/css/all.css}">
     <link rel="stylesheet" th:href="@{/css/admin-all.css}">
@@ -36,6 +38,10 @@
                     <li class="nav-link active">
                         <i class="fas fa-calendar-alt"></i>
                         <a th:href="@{/admin/appointments}" class="link">Appointments</a>
+                    </li>
+                    <li class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <a th:href="@{/admin/appointments-confirm}" class="link">Manage Records</a>
                     </li>
                     <li class="bottom-link">
                         <button onclick="confirmLogout(event)" class="nav-link">

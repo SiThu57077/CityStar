@@ -8,19 +8,24 @@ body {
     font-weight: 100;
 }
 :root {
-    --hover-color:rgb(223, 223, 223);
-    --primary-color: rgb(45, 52, 141);
-    --primary-hover-color:rgb(34, 38, 94);
-    --background-color: #f4f4f4;
-    --linear-color-1:rgb(16, 4, 83);
-    --linear-color-2:rgb(42, 68, 174);
-    --linear-color-3: rgb(57, 154, 183);
-    --text-color:white;
-    --error-color:red;
-    --opacity-color:#3a84df;
-    --decline-color:#ad1457;
-    --opacity-hover-color:#d5e8ffd5;
-    --hightlight-color: #f0f6ff;
+--hover-color: rgb(255, 228, 225);              /* soft neutral hover (light red/pinkish) */
+--primary-color: rgb(220, 20, 60);              /* soft red (Crimson) */
+--primary-hover-color: rgb(139, 0, 0);          /* deeper red for hover (Dark Red) */
+
+--background-color: #f4f4f4;                    /* neutral can remain */
+--linear-color-1: rgb(178, 34, 34);             /* FireBrick (dark red base) */
+--linear-color-2: rgb(255, 99, 71);             /* Tomato (medium red) */
+--linear-color-3: rgb(255, 160, 122);           /* LightSalmon (light red) */
+
+--text-color: white;
+--error-color: red;
+
+--opacity-color: #f08080;                       /* Light Coral (semi-light red) */
+--decline-color: #b22222;                       /* FireBrick (noticeable red) */
+
+--opacity-hover-color: #ffececcc;               /* soft light red with alpha */
+--hightlight-color: #fff5f5;                    /* very pale red for highlight */
+    
 }
 a, a:visited, a:hover, a:active, a:focus {
     color: inherit;

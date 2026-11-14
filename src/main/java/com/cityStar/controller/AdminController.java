@@ -4,11 +4,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 // import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -76,6 +80,30 @@ public class AdminController {
         AdminDTO admin = getAdmin(user);
         model.addAttribute("current_user", admin);
         return "admin/admin-appointments";
+    }
+
+    @GetMapping("/appointments-confirm")
+    public String AppointmentsC(@AuthenticationPrincipal CustomUserDetails user,
+                                Model model) {
+        AdminDTO admin = getAdmin(user);
+        model.addAttribute("current_user", admin);
+        return "admin/admin-appointments-confirm";
+    }
+
+    @GetMapping("/all/appointments")
+    @ResponseBody
+    public List<AppointmentDTO> getAppointments(@AuthenticationPrincipal UserDetails user) {
+        return adminService.getAllAppointments();
+    }
+
+    @PatchMapping("/update-status/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> updateAppointmentStatus(
+            @PathVariable Long id,
+            @RequestParam Status status
+    ) {
+        adminService.updateStatus(id, status);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/appointments/by-date")
